@@ -4,20 +4,21 @@ import pygame
 from scripts.utils import load_images
 from scripts.tilemap import Tilemap
 
-RENDER_SCALE = 2.0
+RENDER_SCALE = 1.0
 
 class MapEditor:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Map Editor 2D')
-        self.screen = pygame.display.set_mode((1000, 800))
-        self.display = pygame.Surface((500, 400))
+        self.screen = pygame.display.set_mode((1000, 900))
+        self.display = pygame.Surface((1000, 900))
         self.clock = pygame.time.Clock()
 
         # TODU: dynamisk assets
         self.assets = {
             'wall': load_images('tiles/wall'),
             'floor': load_images('tiles/floor'),
+            'spawner': load_images('tiles/spawner'),
         }
         self.tile_list = list(self.assets)
         self.tile_group = 0
@@ -29,7 +30,7 @@ class MapEditor:
         self.tilemap = Tilemap(self, tile_size=30)
         # TODU: dynamisk file load
         try:
-            self.tilemap.load('map.json')
+            self.tilemap.load('assets/maps/map.json')
         except FileNotFoundError:
             pass
 
@@ -129,7 +130,7 @@ class MapEditor:
                     if event.key == pygame.K_t:
                         self.tilemap.autotile()
                     if event.key == pygame.K_o:
-                        self.tilemap.save('map.json')
+                        self.tilemap.save('assets/maps/map.json')
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
 
